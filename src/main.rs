@@ -4,7 +4,7 @@ use gtk::{
     Orientation, Label, HeaderBar, ComboBoxText,
     Entry, glib
 };
-use zero_pass_backend::SymetricMethod;
+use zero_pass_backend::{ self as zpb, encrypt };
 
 fn main() {
    let app = Application::new(Some("io.github.caiovieiraf.zero-pass-app"), Default::default());
@@ -25,7 +25,7 @@ fn render(app: &Application){
 
     let padding = 20;
 
-    let methods_list: Vec<String> = SymetricMethod::get_methods().keys().cloned().collect();
+    let methods_list: Vec<String> = zpb::get_methods().keys().cloned().collect();
 
     let methods_menu = ComboBoxText::new();
     for i in methods_list.iter(){
@@ -48,10 +48,12 @@ fn render(app: &Application){
                 let iv = input_variable.buffer().text().clone();
                 let choice = methods_menu.active_text();
 
+                let method_args = encrypt::MethodArgs { word: iu.as_str(), password: iv.as_str() };
+
                 match choice {
                     Some(i) => {
                         result.set_label(&encrypt_input(
-                                iu, iv, SymetricMethod::get_methods().get(i.as_str()).unwrap()
+                                &zpb::get_methods().get(i.as_str()).unwrap()(method_args)
                             ));
                     },
                     None => {result.set_label("É nescessário especificar um método de criptografia")}
@@ -84,8 +86,8 @@ fn render(app: &Application){
     window.present();
 }
 
-fn encrypt_input(uw: String, vw: String, method: &SymetricMethod) -> String{
-   SymetricMethod::gen_pass(method, &uw, &vw)
+fn encrypt_input(method: &encrypt::Methods) -> String{
+   encrypt::gen_pass(method)
 }
 
 fn build_button(placeholder: &str) -> Entry{
