@@ -4,7 +4,7 @@ use gtk::{
     Orientation, Label, HeaderBar, ComboBoxText,
     Entry, glib
 };
-use zero_pass_backend::{ self as zpb, encrypt };
+use zero_pass_backend::{ self as zpb, encrypt, CipherResult };
 
 fn main() {
    let app = Application::new(Some("io.github.caiovieiraf.zero-pass-app"), Default::default());
@@ -52,9 +52,17 @@ fn render(app: &Application){
 
                 match choice {
                     Some(i) => {
-                        result.set_label(&encrypt_input(
+                        result.set_label(
+                            match &encrypt_input(
                                 &zpb::get_methods().get(i.as_str()).unwrap()(method_args)
-                            ));
+                            ) {
+                                Ok(s) => s,
+                                Err(e) => {
+                                    println!("{:?}: O caracter inserido é inválido.", e);
+                                    "O caracter inserido é inválido."
+                                }
+                            }
+                        );
                     },
                     None => {result.set_label("É nescessário especificar um método de criptografia")}
                 }
@@ -86,7 +94,7 @@ fn render(app: &Application){
     window.present();
 }
 
-fn encrypt_input(method: &encrypt::Methods) -> String{
+fn encrypt_input(method: &encrypt::Methods) -> CipherResult{
    encrypt::gen_pass(method)
 }
 
