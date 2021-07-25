@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+TryExec=zero_pass_app
+Exec=zero_pass_app
+Icon=Zero-Pass
+Terminal=false
+
+Name=Zero-Pass
+GenericName=Password generator
+Comment=A password generator
+StartupWMClass=Zero-Pass
+Actions=New;
+
+[Desktop Action New]
+Name=New instance
+Exec=zero_pass_app

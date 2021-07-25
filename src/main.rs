@@ -16,6 +16,7 @@ fn render(app: &Application){
     let window = ApplicationWindow::builder()
         .application(app)
         .title("Zero Pass")
+        .show_menubar(false)
         .default_height(80)
         .default_width(60)
         .startup_id("zero-pass-app")
