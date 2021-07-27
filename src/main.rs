@@ -1,7 +1,7 @@
 use gtk::prelude::*;
 use gtk::{
     self, Application, ApplicationWindow, Button,
-    Orientation, Label, HeaderBar, ComboBoxText,
+    Orientation, Label, ComboBoxText,
     Entry, glib
 };
 use zero_pass_backend::{ self as zpb, encrypt, CipherResult };
@@ -16,13 +16,10 @@ fn render(app: &Application){
     let window = ApplicationWindow::builder()
         .application(app)
         .title("Zero Pass")
-        .show_menubar(false)
-        .default_height(80)
-        .default_width(60)
+        .default_height(300)
+        .default_width(400)
         .startup_id("zero-pass-app")
         .build();
-
-    let controls = HeaderBar::new();
 
     let padding = 20;
 
@@ -82,7 +79,6 @@ fn render(app: &Application){
 
     window.set_child(Some(&app_area));
 
-    app_area.append(&controls);
     app_area.append(&main_area);
 
     main_area.append(&label);
