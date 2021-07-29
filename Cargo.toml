@@ -9,5 +9,5 @@ edition = "2018"
 zero_pass_backend = "0.0.6"
 
 [dependencies.gtk]
-package = "gtk4"
-version = "0.2.0"
+package = "gtk"
+version = "0.14.0"

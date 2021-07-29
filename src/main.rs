@@ -79,16 +79,16 @@ fn render(app: &Application){
 
     window.set_child(Some(&app_area));
 
-    app_area.append(&main_area);
+    app_area.pack_start(&main_area, true, true, 5);
 
-    main_area.append(&label);
-    main_area.append(&input_unique);
-    main_area.append(&input_variable);
-    main_area.append(&methods_menu);
-    main_area.append(&result);
-    main_area.append(&button_confirm);
+    main_area.pack_start(&label, true, true, 5);
+    main_area.pack_start(&input_unique, true, true, 5);
+    main_area.pack_start(&input_variable, true, true, 5);
+    main_area.pack_start(&methods_menu, true, true, 5);
+    main_area.pack_start(&result, true, true, 5);
+    main_area.pack_start(&button_confirm, true, true, 5);
 
-    window.present();
+    window.show_all();
 }
 
 fn encrypt_input(method: &encrypt::Methods) -> CipherResult{
