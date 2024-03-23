@@ -1,11 +1,7 @@
-use iced::{
-    alignment::Horizontal,
-    executor, theme,
-    widget::{
-        button, column, container, pick_list, row, scrollable, slider, text, text_input, Column,
-    },
-    Application, Command, Length, Settings, Theme,
-};
+mod gui;
+
+use gui::UI;
+use iced::{executor, Application, Command, Settings, Theme};
 use zero_pass_backend::{encrypt::PasswordBuilder, Methods};
 
 fn main() -> iced::Result {
@@ -19,7 +15,7 @@ struct ZeroPass {
     result: String,
 }
 #[derive(Debug, Clone)]
-enum Message {
+pub enum Message {
     UniqueChange(String),
     VariableChange(String),
     Generate,
@@ -67,7 +63,7 @@ impl Application for ZeroPass {
                     .variable(self.variable.clone());
                 for method in &self.methods {
                     result = result
-                        .repeat(method.0.clone())
+                        .repeat(method.0)
                         .method_ptr(method.1.to_method())
                         .unwrap();
                 }
@@ -101,86 +97,11 @@ impl Application for ZeroPass {
     }
 
     fn view(&self) -> iced::Element<'_, Self::Message> {
-        let unique_field = text_input("Unique", &self.unique).on_input(Message::UniqueChange);
-        let variable_field =
-            text_input("Variable", &self.variable).on_input(Message::VariableChange);
-        let gen_button = container(
-            button(
-                text("Generate password")
-                    .horizontal_alignment(Horizontal::Center)
-                    .width(Length::Fill),
-            )
-            .on_press(Message::Generate)
-            .width(Length::Fill),
-        )
-        .width(Length::Fill)
-        .center_x();
-        let result = text(&self.result);
-        let add_method = button(
-            text("+")
-                .horizontal_alignment(Horizontal::Center)
-                .width(Length::Fill),
-        )
-        .on_press(Message::AddMethod)
-        .width(Length::Fill)
-        .style(theme::Button::Positive);
-        let remove_method = button(
-            text("-")
-                .horizontal_alignment(Horizontal::Center)
-                .width(Length::Fill),
-        )
-        .on_press(Message::RemoveMethod)
-        .width(Length::Fill)
-        .style(theme::Button::Destructive);
-        let mut methods_picker = vec![];
-
-        for (i, method) in self.methods.iter().enumerate().into_iter() {
-            let index = i.clone();
-            let repeat_slider = slider(1..=128, self.methods[i].0, move |r| {
-                Message::RepeatChange(index, r)
-            });
-            methods_picker.push(
-                row![
-                    pick_list(
-                        Methods::get_methods()
-                            .iter()
-                            .map(|m| String::from(*m))
-                            .collect::<Vec<_>>(),
-                        Some(format!("{:?}", method.1)),
-                        move |m| Message::MethodSelect(i, m)
-                    ),
-                    column![
-                        repeat_slider,
-                        container(text(format!("{}", self.methods[i].0)))
-                            .width(Length::Fill)
-                            .center_x()
-                    ]
-                ]
-                .spacing(20)
-                .into(),
-            );
-        }
-        container(
-            column![
-                column![text("Unique pass"), unique_field],
-                column![text("Variable pass"), variable_field],
-                container(scrollable(column![
-                    Column::with_children(methods_picker).spacing(5).padding(5),
-                    row![add_method, remove_method]
-                ]))
-                .width(Length::Fill)
-                .style(iced::theme::Container::Box),
-                container(column![gen_button, result])
-            ]
-            .spacing(20),
-        )
-        .padding(20)
-        .height(Length::Fill)
-        .center_y()
-        .into()
+        UI::build(self)
     }
 
     fn theme(&self) -> iced::Theme {
         Theme::Dark
     }
 }
+
