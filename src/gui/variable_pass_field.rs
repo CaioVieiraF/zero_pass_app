@@ -1,12 +1,15 @@
-use iced::widget::{column, text};
+use iced::widget::column;
 
 use crate::Message;
 
-use super::widgets::TextInput;
+use super::widgets::{text::TextStyle, Text, TextInput, ZeroPassTheme};
 
-pub fn variable_pass_field<'a>(variable: &str) -> iced::Element<'a, Message> {
+pub fn variable_pass_field<'a>(variable: &str) -> iced::Element<'a, Message, ZeroPassTheme> {
     let variable_field = TextInput::new("Variable", variable).on_input(Message::VariableChange);
 
-    column![text("Variable pass"), variable_field].into()
+    column![
+        Text::new("Variable pass").style(TextStyle::Dark),
+        variable_field
+    ]
+    .into()
 }
-

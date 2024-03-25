@@ -2,9 +2,11 @@ mod generate_area;
 mod method_info_list;
 mod unique_pass_field;
 mod variable_pass_field;
-mod widgets;
+pub mod widgets;
 
 use crate::ZeroPass;
+
+use self::widgets::ZeroPassTheme;
 
 use super::Message;
 use iced::{
@@ -15,7 +17,7 @@ use iced::{
 pub struct UI;
 
 impl UI {
-    pub fn build<'a>(zero_pass: &ZeroPass) -> iced::Element<'a, Message> {
+    pub fn build<'a>(zero_pass: &ZeroPass) -> iced::Element<'a, Message, ZeroPassTheme> {
         container(
             column![
                 unique_pass_field::unique_pass_field(&zero_pass.unique),
@@ -31,4 +33,3 @@ impl UI {
         .into()
     }
 }
-

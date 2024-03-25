@@ -1,7 +1,7 @@
 mod gui;
 
-use gui::UI;
-use iced::{executor, Application, Command, Settings, Theme};
+use gui::{widgets::ZeroPassTheme, UI};
+use iced::{executor, Application, Command, Settings};
 use zero_pass_backend::{encrypt::PasswordBuilder, Methods};
 
 fn main() -> iced::Result {
@@ -28,7 +28,7 @@ pub enum Message {
 impl Application for ZeroPass {
     type Message = Message;
     type Flags = ();
-    type Theme = Theme;
+    type Theme = ZeroPassTheme;
     type Executor = executor::Default;
 
     fn new(_flags: Self::Flags) -> (Self, Command<Self::Message>) {
@@ -49,12 +49,12 @@ impl Application for ZeroPass {
     fn update(&mut self, message: Self::Message) -> Command<Self::Message> {
         match message {
             Message::UniqueChange(content) => {
-                self.unique = content;
+                self.unique = content.trim().into();
 
                 Command::none()
             }
             Message::VariableChange(content) => {
-                self.variable = content;
+                self.variable = content.trim().into();
                 Command::none()
             }
             Message::Generate => {
@@ -96,12 +96,11 @@ impl Application for ZeroPass {
         }
     }
 
-    fn view(&self) -> iced::Element<'_, Self::Message> {
+    fn view(&self) -> iced::Element<'_, Self::Message, ZeroPassTheme> {
         UI::build(self)
     }
 
-    fn theme(&self) -> iced::Theme {
-        Theme::Dark
+    fn theme(&self) -> Self::Theme {
+        ZeroPassTheme::Dark
     }
 }
-

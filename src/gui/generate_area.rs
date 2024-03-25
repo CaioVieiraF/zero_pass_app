@@ -1,17 +1,13 @@
-use iced::{
-    alignment::Horizontal,
-    widget::{column, container, text},
-    Length,
-};
+use iced::{alignment::Horizontal, Length};
 
 use crate::Message;
 
-use super::widgets::{Button, TextInput};
+use super::widgets::{Button, Column, Container, Text, TextInput, ZeroPassTheme};
 
-pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message> {
-    let gen_button = container(
+pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message, ZeroPassTheme> {
+    let gen_button = Container::new(
         Button::new(
-            text("Generate password")
+            Text::new("Generate password")
                 .horizontal_alignment(Horizontal::Center)
                 .width(Length::Fill),
         )
@@ -23,6 +19,5 @@ pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message> {
 
     let result = TextInput::new("The result will appear here", result);
 
-    container(column![gen_button, result].spacing(10)).into()
+    Container::new(Column::with_children([gen_button.into(), result.into()]).spacing(10)).into()
 }
-
