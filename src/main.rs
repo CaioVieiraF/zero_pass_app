@@ -31,6 +31,7 @@ pub enum Message {
     UniqueChange(String),
     VariableChange(String),
     Generate,
+    PasswordIsGenerated(String),
     MethodSelect(usize, String),
     RepeatChange(usize, u8),
     AddMethod,
@@ -71,17 +72,11 @@ impl Application for ZeroPass {
                 Command::none()
             }
             Message::Generate => {
-                let mut result = PasswordBuilder::new()
-                    .unique(self.unique.clone())
-                    .variable(self.variable.clone());
-                for method in &self.methods {
-                    result = result
-                        .repeat(method.0)
-                        .method_ptr(method.1.to_method())
-                        .unwrap();
-                }
+                Command::perform(generate_password(self.unique.clone(), self.variable.clone(), self.methods.clone()), Message::PasswordIsGenerated)
+            }
+            Message::PasswordIsGenerated(result) => {
+                self.result = result;
 
-                self.result = result.build();
                 Command::none()
             }
             Message::MethodSelect(i, method) => {
@@ -118,6 +113,20 @@ impl Application for ZeroPass {
     }
 
     fn theme(&self) -> Self::Theme {
-        ZeroPassTheme::Dark
+        Self::Theme::Dark
     }
+}
+
+async fn generate_password(unique: String, variable: String, methods: Vec<(u8, Methods)>) -> String {
+    let mut result = PasswordBuilder::new()
+        .unique(unique.clone())
+        .variable(variable.clone());
+    for method in methods {
+        result = result
+            .repeat(method.0)
+            .method_ptr(method.1.to_method())
+            .unwrap();
+    }
+
+    result.build()
 }
