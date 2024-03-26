@@ -8,7 +8,8 @@ pub mod text;
 pub mod text_input;
 
 use iced::{
-    application::{self, Appearance}, Color, Element, Font,
+    application::{self, Appearance},
+    Color, Element, Font,
 };
 
 use crate::Message;

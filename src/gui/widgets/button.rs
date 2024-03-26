@@ -92,6 +92,8 @@ fn copy_button_active_style() -> Appearance {
         background: Some(Background::Color(ACCENT)),
         border: iced::Border {
             radius: Radius::from([0.0, 4.0, 4.0, 0.0]),
+            width: 1.0,
+            color: ACCENT,
             ..Default::default()
         },
         ..Appearance::default()

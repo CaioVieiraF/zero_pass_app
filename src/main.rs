@@ -9,6 +9,13 @@ fn main() -> iced::Result {
         fonts: vec![include_bytes!("../fonts/zero-pass-icons.ttf")
             .as_slice()
             .into()],
+        window: iced::window::Settings {
+            size: iced::Size {
+                width: 500.0,
+                height: 600.0,
+            },
+            ..Default::default()
+        },
         ..Default::default()
     })
 }
@@ -114,4 +121,3 @@ impl Application for ZeroPass {
         ZeroPassTheme::Dark
     }
 }
-

@@ -3,8 +3,8 @@ use iced::{alignment::Horizontal, widget::row, Length};
 use crate::Message;
 
 use super::widgets::{
-    button::ButtonStyle, text_input::TextInputStyle, Button, Column, Container, Text, TextInput,
-    ZeroPassTheme, copy_icon
+    button::ButtonStyle, copy_icon, text_input::TextInputStyle, Button, Column, Container, Text,
+    TextInput, ZeroPassTheme,
 };
 
 pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message, ZeroPassTheme> {
