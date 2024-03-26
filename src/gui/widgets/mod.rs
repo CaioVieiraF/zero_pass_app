@@ -5,7 +5,7 @@ mod pick_list;
 mod scrollable;
 mod slider;
 pub mod text;
-mod text_input;
+pub mod text_input;
 
 use iced::{
     application::{self, Appearance},

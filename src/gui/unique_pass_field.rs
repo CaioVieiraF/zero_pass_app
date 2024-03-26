@@ -3,7 +3,10 @@ use crate::Message;
 use iced::widget::column;
 
 pub fn unique_pass_field<'a>(unique: &str) -> iced::Element<'a, Message, ZeroPassTheme> {
-    let unique_field = TextInput::new("Unique", unique).on_input(Message::UniqueChange);
+    let unique_field = TextInput::new("Unique", unique)
+        .on_input(Message::UniqueChange)
+        .size(20)
+        .padding(10);
 
     column![
         Text::new("Unique pass").style(TextStyle::Dark),

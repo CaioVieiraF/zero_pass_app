@@ -1,8 +1,11 @@
-use iced::{alignment::Horizontal, Length};
+use iced::{alignment::Horizontal, widget::row, Length};
 
 use crate::Message;
 
-use super::widgets::{Button, Column, Container, Text, TextInput, ZeroPassTheme};
+use super::widgets::{
+    button::ButtonStyle, text_input::TextInputStyle, Button, Column, Container, Text, TextInput,
+    ZeroPassTheme,
+};
 
 pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message, ZeroPassTheme> {
     let gen_button = Container::new(
@@ -12,12 +15,19 @@ pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message, ZeroPass
                 .width(Length::Fill),
         )
         .on_press(Message::Generate)
+        .padding(10)
         .width(Length::Fill),
     )
     .width(Length::Fill)
     .center_x();
 
-    let result = TextInput::new("The result will appear here", result);
+    let result = row!(
+        TextInput::new("The result will appear here", result).style(TextInputStyle::Copy).padding(10).size(20),
+        Button::new("C")
+            .on_press(Message::CopyResult(result.to_string()))
+            .style(ButtonStyle::Copy)
+            .padding(12)
+    );
 
     Container::new(Column::with_children([gen_button.into(), result.into()]).spacing(10)).into()
 }

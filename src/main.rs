@@ -1,7 +1,7 @@
 mod gui;
 
 use gui::{widgets::ZeroPassTheme, UI};
-use iced::{executor, Application, Command, Settings};
+use iced::{clipboard, executor, Application, Command, Settings};
 use zero_pass_backend::{encrypt::PasswordBuilder, Methods};
 
 fn main() -> iced::Result {
@@ -23,6 +23,7 @@ pub enum Message {
     RepeatChange(usize, u8),
     AddMethod,
     RemoveMethod,
+    CopyResult(String),
 }
 
 impl Application for ZeroPass {
@@ -92,6 +93,10 @@ impl Application for ZeroPass {
                 }
 
                 Command::none()
+            }
+            Message::CopyResult(result) => {
+                // TODO: copy generated text
+                clipboard::write(result)
             }
         }
     }

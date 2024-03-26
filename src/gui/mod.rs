@@ -20,12 +20,15 @@ impl UI {
     pub fn build<'a>(zero_pass: &ZeroPass) -> iced::Element<'a, Message, ZeroPassTheme> {
         container(
             column![
-                unique_pass_field::unique_pass_field(&zero_pass.unique),
-                variable_pass_field::variable_pass_field(&zero_pass.variable),
+                column![
+                    unique_pass_field::unique_pass_field(&zero_pass.unique),
+                    variable_pass_field::variable_pass_field(&zero_pass.variable),
+                ]
+                .spacing(10),
                 method_info_list::method_info_list(&zero_pass.methods),
                 generate_area::generate_area(&zero_pass.result)
             ]
-            .spacing(10),
+            .spacing(30),
         )
         .padding(20)
         .height(Length::Fill)
