@@ -166,4 +166,3 @@ fn remove_method_button_pressed_style() -> Appearance {
         ..Appearance::default()
     }
 }
-

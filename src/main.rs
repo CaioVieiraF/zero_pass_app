@@ -5,7 +5,12 @@ use iced::{clipboard, executor, Application, Command, Settings};
 use zero_pass_backend::{encrypt::PasswordBuilder, Methods};
 
 fn main() -> iced::Result {
-    ZeroPass::run(Settings::default())
+    ZeroPass::run(Settings {
+        fonts: vec![include_bytes!("../fonts/zero-pass-icons.ttf")
+            .as_slice()
+            .into()],
+        ..Default::default()
+    })
 }
 
 struct ZeroPass {
@@ -109,3 +114,4 @@ impl Application for ZeroPass {
         ZeroPassTheme::Dark
     }
 }
+

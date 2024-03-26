@@ -4,7 +4,7 @@ use crate::Message;
 
 use super::widgets::{
     button::ButtonStyle, text_input::TextInputStyle, Button, Column, Container, Text, TextInput,
-    ZeroPassTheme,
+    ZeroPassTheme, copy_icon
 };
 
 pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message, ZeroPassTheme> {
@@ -22,8 +22,11 @@ pub fn generate_area<'a>(result: &String) -> iced::Element<'a, Message, ZeroPass
     .center_x();
 
     let result = row!(
-        TextInput::new("The result will appear here", result).style(TextInputStyle::Copy).padding(10).size(20),
-        Button::new("C")
+        TextInput::new("The result will appear here", result)
+            .style(TextInputStyle::Copy)
+            .padding(10)
+            .size(20),
+        Button::new(copy_icon())
             .on_press(Message::CopyResult(result.to_string()))
             .style(ButtonStyle::Copy)
             .padding(12)

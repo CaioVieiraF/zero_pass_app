@@ -8,9 +8,10 @@ pub mod text;
 pub mod text_input;
 
 use iced::{
-    application::{self, Appearance},
-    Color,
+    application::{self, Appearance}, Color, Element, Font,
 };
+
+use crate::Message;
 
 pub type TextInput<'a, Message> = iced::widget::TextInput<'a, Message, ZeroPassTheme>;
 pub type Button<'a, Message> = iced::widget::Button<'a, Message, ZeroPassTheme>;
@@ -50,4 +51,14 @@ impl application::StyleSheet for ZeroPassTheme {
             text_color: TEXT,
         }
     }
+}
+
+fn icon<'a>(code: char) -> Element<'a, Message, ZeroPassTheme> {
+    const ICON_FONT: Font = Font::with_name("zero-pass-icons");
+
+    iced::widget::text(code).font(ICON_FONT).into()
+}
+
+pub fn copy_icon<'a>() -> Element<'a, Message, ZeroPassTheme> {
+    icon('\u{E800}')
 }
