@@ -116,6 +116,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "async-trait"
+version = "0.1.79"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a507401cad91ec6a857ed5513a2073c82a9b9048762b885bb98655b306964681"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.53",
+]
+
+[[package]]
 name = "atomic-waker"
 version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1174,9 +1185,9 @@ dependencies = [
 
 [[package]]
 name = "itoa"
-version = "1.0.10"
+version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1a46d1a171d865aa5f83f92695765caa047a9b4cbae2cbf37dbd613a793fd4c"
+checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
 
 [[package]]
 name = "jni"
@@ -1962,9 +1973,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.114"
+version = "1.0.115"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c5f09b1bd632ef549eaa9f60a1f8de742bdbc698e6cee2095fc84dde5f549ae0"
+checksum = "12dc5c46daa8e9fdf4f5e71b6cf9a53f2487da0e86e55808e2d35539666497dd"
 dependencies = [
  "itoa",
  "ryu",
@@ -3109,10 +3120,11 @@ dependencies = [
 
 [[package]]
 name = "zero_pass_backend"
-version = "0.2.6"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3396574602acfd3754947e9b548bf97dded2b5e5d4c9a2d4b186d794d4ce620c"
+checksum = "77efab19ca1c6aa822ca0e74d6cf9a4ef2daaff58a126aa48a716b2080277267"
 dependencies = [
+ "async-trait",
  "base64",
  "serde_json",
  "thiserror",
@@ -3121,9 +3133,9 @@ dependencies = [
 
 [[package]]
 name = "zero_pass_backend_derive"
-version = "0.1.1"
+version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5b49806974fe2a027c2ec3d992db875b770910c75302212c6c95451b00b99ad"
+checksum = "b7a46cd0bc28d5e9399e37e40605b4782a8df69ea63fedb00c6e524daaf74278"
 dependencies = [
  "quote",
  "syn 1.0.109",

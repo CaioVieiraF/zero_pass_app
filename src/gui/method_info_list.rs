@@ -52,7 +52,7 @@ pub fn method_info_list<'a>(
                 .into(),
                 Column::with_children([
                     Container::new(repeat_slider).into(),
-                    Container::new(Text::new(format!("{}", methods[i].0)))
+                    Container::new(Text::new(format!("{}", methods[i].0)).style(TextStyle::Dark))
                         .width(Length::Fill)
                         .center_x()
                         .into(),

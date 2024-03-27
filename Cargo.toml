@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 iced = "0.12.1"
-zero_pass_backend = "0.2.6"
+zero_pass_backend = { version = "0.3.2" }

@@ -125,6 +125,7 @@ async fn generate_password(unique: String, variable: String, methods: Vec<(u8, M
         result = result
             .repeat(method.0)
             .method_ptr(method.1.to_method())
+            .await
             .unwrap();
     }
 
