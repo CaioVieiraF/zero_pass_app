@@ -1,6 +1,6 @@
 use iced::{overlay::menu, Background};
 
-use super::{pick_list::PickListStyle, ZeroPassTheme, ACCENT, BACKGROUND, TEXT};
+use super::{pick_list::PickListStyle, ZeroPassTheme, ACCENT_DARK, BACKGROUND_DARK, TEXT_DARK};
 
 #[derive(Default, Clone)]
 pub enum MenuStyle {
@@ -22,11 +22,11 @@ impl menu::StyleSheet for ZeroPassTheme {
     fn appearance(&self, style: &Self::Style) -> menu::Appearance {
         match style {
             MenuStyle::Default => menu::Appearance {
-                text_color: TEXT,
-                background: Background::Color(BACKGROUND),
+                text_color: TEXT_DARK,
+                background: Background::Color(BACKGROUND_DARK),
                 border: Default::default(),
-                selected_text_color: TEXT,
-                selected_background: Background::Color(ACCENT),
+                selected_text_color: TEXT_DARK,
+                selected_background: Background::Color(ACCENT_DARK),
             },
         }
     }

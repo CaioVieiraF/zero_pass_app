@@ -1,6 +1,6 @@
 use iced::widget::slider;
 
-use super::{ZeroPassTheme, ACCENT, BACKGROUND, PRIMARY, SECONDARY};
+use super::{ZeroPassTheme, ACCENT_DARK, BACKGROUND_DARK, PRIMARY_DARK, SECONDARY_DARK};
 
 #[derive(Default)]
 pub enum SliderStyle {
@@ -15,7 +15,7 @@ impl slider::StyleSheet for ZeroPassTheme {
         match style {
             SliderStyle::Default => slider::Appearance {
                 rail: slider::Rail {
-                    colors: (SECONDARY, BACKGROUND),
+                    colors: (SECONDARY_DARK, BACKGROUND_DARK),
                     width: 1.0,
                     border_radius: Default::default(),
                 },
@@ -24,9 +24,9 @@ impl slider::StyleSheet for ZeroPassTheme {
                         width: 5,
                         border_radius: Default::default(),
                     },
-                    color: ACCENT,
+                    color: ACCENT_DARK,
                     border_width: 0.0,
-                    border_color: PRIMARY,
+                    border_color: PRIMARY_DARK,
                 },
             },
         }

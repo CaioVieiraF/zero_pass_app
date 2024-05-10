@@ -1,12 +1,12 @@
 use iced::widget::text::{self, Appearance};
 
-use super::{ZeroPassTheme, BACKGROUND, TEXT};
+use super::{ZeroPassTheme, BACKGROUND_DARK, TEXT_DARK};
 
 #[derive(Debug, Clone, Copy, Default)]
 pub enum TextStyle {
     #[default]
-    Light,
     Dark,
+    Light,
 }
 
 impl text::StyleSheet for ZeroPassTheme {
@@ -14,9 +14,9 @@ impl text::StyleSheet for ZeroPassTheme {
 
     fn appearance(&self, style: Self::Style) -> Appearance {
         match style {
-            TextStyle::Dark => Appearance { color: Some(TEXT) },
+            TextStyle::Dark => Appearance { color: Some(TEXT_DARK) },
             TextStyle::Light => Appearance {
-                color: Some(BACKGROUND),
+                color: Some(BACKGROUND_DARK),
             },
         }
     }

@@ -6,7 +6,7 @@ use iced::{
     Background,
 };
 
-use super::{ZeroPassTheme, ACCENT, PRIMARY};
+use super::{ZeroPassTheme, ACCENT_DARK, PRIMARY_DARK};
 
 #[derive(Default)]
 pub enum ScrollableStyle {
@@ -21,10 +21,10 @@ impl scrollable::StyleSheet for ZeroPassTheme {
         Appearance {
             container: container::Appearance::default(),
             scrollbar: scrollable::Scrollbar {
-                background: Some(Background::Color(ACCENT)),
+                background: Some(Background::Color(ACCENT_DARK)),
                 border: Default::default(),
                 scroller: scrollable::Scroller {
-                    color: PRIMARY,
+                    color: PRIMARY_DARK,
                     border: Default::default(),
                 },
             },
@@ -37,10 +37,10 @@ impl scrollable::StyleSheet for ZeroPassTheme {
             Appearance {
                 container: container::Appearance::default(),
                 scrollbar: scrollable::Scrollbar {
-                    background: Some(Background::Color(ACCENT)),
+                    background: Some(Background::Color(ACCENT_DARK)),
                     border: Default::default(),
                     scroller: scrollable::Scroller {
-                        color: PRIMARY,
+                        color: PRIMARY_DARK,
                         border: Default::default(),
                     },
                 },
@@ -50,10 +50,10 @@ impl scrollable::StyleSheet for ZeroPassTheme {
             Appearance {
                 container: container::Appearance::default(),
                 scrollbar: scrollable::Scrollbar {
-                    background: Some(Background::Color(ACCENT)),
+                    background: Some(Background::Color(ACCENT_DARK)),
                     border: Default::default(),
                     scroller: scrollable::Scroller {
-                        color: PRIMARY,
+                        color: PRIMARY_DARK,
                         border: Default::default(),
                     },
                 },

@@ -4,8 +4,8 @@ use zero_pass_backend::Methods;
 use crate::Message;
 
 use super::widgets::{
-    button::ButtonStyle, container::ContainerStyle, text::TextStyle, Button, Column, Container,
-    PickList, Row, Scrollable, Slider, Text, ZeroPassTheme,
+    button::ButtonStyle, text::TextStyle, Button, Column, Container, PickList, Row, Scrollable,
+    Slider, Text, ZeroPassTheme,
 };
 
 pub fn method_info_list<'a>(
@@ -52,7 +52,7 @@ pub fn method_info_list<'a>(
                 .into(),
                 Column::with_children([
                     Container::new(repeat_slider).into(),
-                    Container::new(Text::new(format!("{}", methods[i].0)).style(TextStyle::Dark))
+                    Container::new(Text::new(format!("{}", methods[i].0)))
                         .width(Length::Fill)
                         .center_x()
                         .into(),
@@ -72,6 +72,5 @@ pub fn method_info_list<'a>(
         Row::with_children([add_method.into(), remove_method.into()]).into(),
     ])))
     .width(Length::Fill)
-    .style(ContainerStyle::default())
     .into()
 }

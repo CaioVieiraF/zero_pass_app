@@ -1,8 +1,12 @@
 mod gui;
 
 use gui::{widgets::ZeroPassTheme, UI};
-use iced::{clipboard, executor, Application, Command, Settings};
+use iced::{clipboard, executor, window, Application, Command, Settings};
 use zero_pass_backend::{encrypt::PasswordBuilder, Methods};
+
+const WINDOW_WIDTH: f32 = 500.0;
+const WINDOW_HEIGHT: f32 = 600.0;
+const TITLE: &str = "Zero Pass";
 
 fn main() -> iced::Result {
     ZeroPass::run(Settings {
@@ -11,9 +15,11 @@ fn main() -> iced::Result {
             .into()],
         window: iced::window::Settings {
             size: iced::Size {
-                width: 500.0,
-                height: 600.0,
+                width: WINDOW_WIDTH,
+                height: WINDOW_HEIGHT,
             },
+            resizable: false,
+            decorations: true,
             ..Default::default()
         },
         ..Default::default()
@@ -25,6 +31,7 @@ struct ZeroPass {
     variable: String,
     methods: Vec<(u8, Methods)>,
     result: String,
+    theme: ZeroPassTheme,
 }
 #[derive(Debug, Clone)]
 pub enum Message {
@@ -37,6 +44,8 @@ pub enum Message {
     AddMethod,
     RemoveMethod,
     CopyResult(String),
+    ToggleTheme,
+    CloseWindow,
 }
 
 impl Application for ZeroPass {
@@ -48,16 +57,17 @@ impl Application for ZeroPass {
     fn new(_flags: Self::Flags) -> (Self, Command<Self::Message>) {
         (
             Self {
-                unique: String::default(),
-                variable: String::default(),
+                unique: Default::default(),
+                variable: Default::default(),
                 methods: vec![(1, Methods::Base64)],
-                result: String::default(),
+                result: Default::default(),
+                theme: Self::Theme::default(),
             },
             Command::none(),
         )
     }
     fn title(&self) -> String {
-        String::from("Zero Pass")
+        TITLE.into()
     }
 
     fn update(&mut self, message: Self::Message) -> Command<Self::Message> {
@@ -71,9 +81,14 @@ impl Application for ZeroPass {
                 self.variable = content.trim().into();
                 Command::none()
             }
-            Message::Generate => {
-                Command::perform(generate_password(self.unique.clone(), self.variable.clone(), self.methods.clone()), Message::PasswordIsGenerated)
-            }
+            Message::Generate => Command::perform(
+                generate_password(
+                    self.unique.clone(),
+                    self.variable.clone(),
+                    self.methods.clone(),
+                ),
+                Message::PasswordIsGenerated,
+            ),
             Message::PasswordIsGenerated(result) => {
                 self.result = result;
 
@@ -105,6 +120,17 @@ impl Application for ZeroPass {
                 // TODO: copy generated text
                 clipboard::write(result)
             }
+            Message::ToggleTheme => {
+                self.theme = match self.theme {
+                    Self::Theme::Dark => Self::Theme::Light,
+                    Self::Theme::Light => Self::Theme::Dark
+                };
+
+                Command::none()
+            }
+            Message::CloseWindow => {
+                window::close(window::Id::MAIN)
+            }
         }
     }
 
@@ -113,11 +139,15 @@ impl Application for ZeroPass {
     }
 
     fn theme(&self) -> Self::Theme {
-        Self::Theme::Dark
+        self.theme.clone()
     }
 }
 
-async fn generate_password(unique: String, variable: String, methods: Vec<(u8, Methods)>) -> String {
+async fn generate_password(
+    unique: String,
+    variable: String,
+    methods: Vec<(u8, Methods)>,
+) -> String {
     let mut result = PasswordBuilder::new()
         .unique(unique.clone())
         .variable(variable.clone());

@@ -2,6 +2,7 @@ mod generate_area;
 mod method_info_list;
 mod unique_pass_field;
 mod variable_pass_field;
+mod toggle_theme_button;
 pub mod widgets;
 
 use crate::ZeroPass;
@@ -20,6 +21,8 @@ impl UI {
     pub fn build<'a>(zero_pass: &ZeroPass) -> iced::Element<'a, Message, ZeroPassTheme> {
         container(
             column![
+                // Button::new(Text::new("X")).on_press(Message::CloseWindow),
+                toggle_theme_button::toggle_theme_button(&zero_pass.theme),
                 column![
                     unique_pass_field::unique_pass_field(&zero_pass.unique),
                     variable_pass_field::variable_pass_field(&zero_pass.variable),
